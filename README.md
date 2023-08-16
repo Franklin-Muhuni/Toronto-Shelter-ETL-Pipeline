@@ -3,7 +3,7 @@ The purpose of this project was to analyze data regarding occupancy and funding/
 
 ## Tools & Architecture
 ![Project Arcitecture](https://i.imgur.com/g5CcxCE.png)
-- Python (Integration)
+- Python (Ingestion & Transformation)
 - Google Cloud Platform
   - Cloud Storage (Storage)
   - Cloud Composer/Airflow (Scheduling)
