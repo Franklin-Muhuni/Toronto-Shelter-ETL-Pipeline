@@ -10,7 +10,7 @@ The purpose of this project was to analyze data regarding occupancy and funding/
   - BigQuery (Warehouse)
 - Looker Studio (Analytics)
 
-## Data Sources
+## Data 
 The dataset used was provided by the Shelter, Support and Housing Administration division and is available for preview and download at the [City of Toronto's open data catalogue](https://open.toronto.ca/dataset/daily-shelter-overnight-service-occupancy-capacity/).
 
 ### Data Model Schema:
