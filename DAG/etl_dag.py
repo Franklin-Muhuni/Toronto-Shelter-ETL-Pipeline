@@ -15,7 +15,7 @@ args = {
 dag = DAG(
     'etl_dag',
     default_args=args,
-    start_date=dt.datetime(2023,8,6),
+    start_date=dt.datetime(2023,8,16),
     schedule=dt.timedelta(days=1),
     catchup=True
 )
