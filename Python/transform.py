@@ -12,6 +12,22 @@ class Transform:
         #converts column headers to lowercase
         df.columns = df.columns.str.lower()
 
+        #highlight disparate columns
+        capacity_actual = ['capacity_actual_bed', 'capacity_actual_room']
+        capacity_fund = ['capacity_funding_bed', 'capacity_funding_room']
+        occupied_col = ['occupied_beds', 'occupied_rooms']
+        unoccupied_col = ['unoccupied_beds', 'unoccupied_rooms']
+        unavailable_col = ['unavailable_beds', 'unavailable_rooms']
+        rate_col = ['occupancy_rate_beds', 'occupancy_rate_rooms']
+
+        #merge disparate values under a common column and drop previous ones
+        df = df.assign(capacity_actual_unit=df[capacity_actual].sum(1)).drop(capacity_actual, axis=1)
+        df = df.assign(capacity_funding_unit=df[capacity_fund].sum(1)).drop(capacity_fund, axis=1)
+        df = df.assign(occupied_units=df[occupied_col].sum(1)).drop(occupied_col, axis=1)
+        df = df.assign(unoccupied_units=df[unoccupied_col].sum(1)).drop(unoccupied_col, axis=1)
+        df = df.assign(unavailable_units=df[unavailable_col].sum(1)).drop(unavailable_col, axis=1)
+        df = df.assign(occupancy_rate_units=df[rate_col].sum(1)).drop(rate_col, axis=1)
+
         #convert date column to datetime object
         df['occupancy_date'] = pd.to_datetime(df['occupancy_date'], format='%Y-%m-%d')
         #convert location id to integer
@@ -81,11 +97,10 @@ class Transform:
                                   '24-Hour Women\'s Drop-in', '24-Hour Respite Site', 'Warming Centre'],
                                  [*range(0, 6)], inplace=True)
         # create fact table
-        fact_table = df[['_id', 'date_id', 'organization_id', 'shelter_id', 'location_id', 'program_id', 'sector_id',
-                         'os_type_id', 'capacity_type_id', 'service_user_count', 'capacity_actual_bed',
-                         'capacity_actual_room', 'capacity_funding_bed', 'capacity_funding_room', 'occupied_beds',
-                         'occupied_rooms', 'unoccupied_beds', 'unoccupied_rooms', 'unavailable_beds',
-                         'unavailable_rooms', 'occupancy_rate_beds', 'occupancy_rate_rooms']]
+        occupancy_fact = df[['_id', 'date_id', 'organization_id', 'shelter_id', 'location_id', 'program_id',
+                             'sector_id', 'os_type_id', 'capacity_type_id', 'service_user_count',
+                             'capacity_actual_unit', 'capacity_funding_unit', 'occupied_units', 'unoccupied_units',
+                             'unavailable_units', 'occupancy_rate_units']]
 
         #return fact and dim tables as nested dictionary
         return {'date_dim': date_dim.to_dict(),
@@ -96,4 +111,4 @@ class Transform:
                 'shelter_dim': shelter_dim.to_dict(),
                 'location_dim': location_dim.to_dict(),
                 'program_dim': program_dim.to_dict(),
-                'fact_table': fact_table.to_dict()}
+                'occupancy_fact': occupancy_fact.to_dict()}
