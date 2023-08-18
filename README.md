@@ -19,4 +19,4 @@ The dataset used was provided by the Shelter, Support and Housing Administration
 ## Dashboard
 Queried and joined data within BigQuery, sending it to Looker Studio where it was used to build a report that highlighted insights regarding overnight shelter programs in the city. The interactive report can be found [here](https://lookerstudio.google.com/s/vIK9u398frU).
 
-![Dashboard](https://i.imgur.com/gPBVcsr.png)
+![Dashboard](https://i.imgur.com/2x3qJBc.png)
